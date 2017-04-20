@@ -2,7 +2,7 @@
 
 Shared repository for python and pop-gen practice
 
-## installation
+## Installation and configuration
 
 1.  Install [Homebrew](http://brew.sh/)
 
@@ -16,19 +16,19 @@ Shared repository for python and pop-gen practice
 
 1.  Install [Anaconda](https://docs.continuum.io/) via pyenv:
     ```sh
-    exec $SHELL -l
-    pyenv install --list | less
-    pyenv install anaconda3-4.3.1
-    pyenv versions
-    pyenv global anaconda3-4.3.1
+    % exec $SHELL -l
+    % pyenv install --list | less
+    % pyenv install anaconda3-4.3.1
+    % pyenv versions
+    % pyenv global anaconda3-4.3.1
     ```
 
 1.  Install and configure [Atom](https://heavywatal.github.io/dev/atom.html)
     ```sh
-    brew cask install atom
-    exec $SHELL -l
-    conda install flake8
-    apm install linter linter-flake8 file-icons
+    % brew cask install atom
+    % exec $SHELL -l
+    % conda install flake8
+    % apm install linter linter-flake8 file-icons
     ```
 
 1.  Setup [`~/.gitconfig`](https://git-scm.com/book/ja/v1/%E4%BD%BF%E3%81%84%E5%A7%8B%E3%82%81%E3%82%8B-%E6%9C%80%E5%88%9D%E3%81%AEGit%E3%81%AE%E6%A7%8B%E6%88%90)
@@ -40,15 +40,52 @@ Shared repository for python and pop-gen practice
     
 1.  Clone the forked repository to your local machine:
     ```sh
-    mkdir ~/git
-    cd ~/git
-    git clone https://github.com/{YOURNAME}/practice-py.git
-    cd practice-py/
-    atom .
-    python hello.py
+    % mkdir ~/git
+    % cd ~/git
+    % git clone https://github.com/{YOURNAME}/practice-py.git
+    % cd practice-py/
+    % atom .
+    % python hello.py
     ```
 
-## Link
+1.  Make an alias to `upstream` repository:
+    ```sh
+    % git remote add upstream https://github.com/heavywatal/practice-py.git
+    % git remote -v
+    origin  https://github.com/{YOURNAME}/practice-py.git (fetch)
+    origin  git@github.com:{YOURNAME}/practice-py.git (push)
+    upstream  https://github.com/heavywatal/practice-py.git (fetch)
+    upstream  git@github.com:heavywatal/practice-py.git (push)
+    ```
+    Note that your forked repository is named `origin`.
 
-- [Kazuki526](https://github.com/Kazuki526/practice-py)
-- [hamazaki1990](https://github.com/hamazaki1990/practice-py)
+
+## Usage
+
+1.  See tasks/issues in "To Do" column of [Projects page](https://github.com/heavywatal/practice-py/projects/1)
+
+1.  Update your local repository with `origin` and `upstream`
+    ```sh
+    % git fetch
+    % git merge
+    % git fetch upstream
+    % git merge upstream/master
+    ```
+
+1.  Edit your local files.
+
+1.  Check `upstream` again.
+
+1.  Stage, commit, and push to your `origin`:
+    ```sh
+    % git diff
+    % git add main.py
+    % git commit -m "Create Individual class #2"
+    % git push origin
+    ```
+    Don't forget to include the id of the relevant issue.
+
+1.  Send "Pull Request" with the button on your GitHub page
+    ([Kazuki526](https://github.com/Kazuki526/practice-py), [hamazaki1990](https://github.com/hamazaki1990/practice-py)).
+
+1.  Your PR will be corrected and merged to [heavywatal/practice-py](https://github.com/heavywatal/practice-py).
