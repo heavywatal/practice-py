@@ -1,11 +1,17 @@
-class Population:
-    def __init__(self, size):
-        self._size = size
-        self._list = [x for x in range(size)]
+class Individual:
+    def __init__(self, n):
+        self._id = n
 
-    def wholeid(self):
-        print(self._list)
+
+class Population(Individual):
+    def __init__(self, size):
+        super().__init__(size)
+        self._individuals = [self._id]
+
+    def print_ids(self):
+        print(self._individuals)
 
 
 p1 = Population(10)
-p1.wholeid()
+print(p1._individuals)
+p1.print_ids
