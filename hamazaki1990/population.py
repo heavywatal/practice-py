@@ -4,17 +4,14 @@ from individual import Individual
 
 class Population:
     def __init__(self, size):
-        self._individuals = [Individual(x) for x in range(size)]
+        self._inds = [Individual(x) for x in range(size)]
 
     def print_ids(self):
-        print(self._individuals)
+        print(self._inds)
 
     def next_generation(self):
-        next_individuals = []
-        size = len(self._individuals)
-        while len(next_individuals) < size:
-            next_individuals.append(self._individuals[random.randrange(size)])
-        self._individuals = next_individuals
+        size = len(self._inds)
+        self._inds = [self._inds[random.randrange(size)] for x in range(size)]
 
 
 p = Population(10)
