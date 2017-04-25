@@ -9,13 +9,23 @@ class Population:
     def print_ids(self):
         print(self._inds)
 
-    def next_generation(self):
-        size = len(self._inds)
-        self._inds = [self._inds[random.randrange(size)] for x in range(size)]
+    def next_genwf(self):
+        n = len(self._inds)
+        self._inds = [self._inds[random.randrange(n)] for x in range(n)]
+
+    def next_genmo(self):
+        n = len(self._inds)
+        self._inds[random.randrange(n)] = self._inds[random.randrange(n)]
 
 
-p = Population(10)
+p1 = Population(10)
 
 for t in range(20):
-    p.print_ids()
-    p.next_generation()
+    p1.print_ids()
+    p1.next_genwf()
+
+p2 = Population(10)
+
+for t in range(20):
+    p2.print_ids()
+    p2.next_genmo()
