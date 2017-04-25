@@ -1,13 +1,9 @@
-class Individual:
-    def __init__(self, n):
-        self._id = n
+from individual import Individual
 
 
 class Population:
     def __init__(self, size):
-        for x in range(size):
-            ix = Individual(x)
-        self._individuals = [ix]
+        self._individuals = [Individual(x) for x in range(size)]
 
     def print_ids(self):
         print(self._individuals)
