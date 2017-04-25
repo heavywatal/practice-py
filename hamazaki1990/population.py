@@ -11,4 +11,4 @@ class Population:
 
 p1 = Population(10)
 print(p1._individuals)
-p1.print_ids
+p1.print_ids()
