@@ -3,10 +3,11 @@ class Individual:
         self._id = n
 
 
-class Population(Individual):
+class Population:
     def __init__(self, size):
-        super().__init__(size)
-        self._individuals = [self._id]
+        for x in range(size):
+            ix = Individual(x)
+        self._individuals = [ix]
 
     def print_ids(self):
         print(self._individuals)
