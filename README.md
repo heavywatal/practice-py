@@ -66,10 +66,10 @@ Shared repository for python and pop-gen practice
 
 1.  Update your local repository with `origin` and `upstream`
     ```sh
-    % git fetch
-    % git merge
-    % git fetch upstream
-    % git merge upstream/master
+    % git pull  # origin master
+    % git pull --rebase upstream master
+    % git status
+    % git push  # origin master
     ```
 
 1.  Edit your local files.
