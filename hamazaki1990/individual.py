@@ -5,6 +5,11 @@ class Individual:
     def get_id(self):
         return self._id
 
+    def __repr__(self):
+        return str(self._id)
+
 
 ind = Individual(42)
 print(ind.get_id())
+print(ind)
+print(str(ind))
