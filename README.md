@@ -62,28 +62,53 @@ Shared repository for python and pop-gen practice
 
 ## Usage
 
-1.  See tasks/issues in "To Do" column of [Projects page](https://github.com/heavywatal/practice-py/projects/1)
+1.  See tasks/issues in "To Do" column of [Projects page](https://github.com/heavywatal/practice-py/projects/1).
 
-1.  Update your local repository with `origin` and `upstream`
+1.  Update your `master` branch:
     ```sh
-    % git fetch
-    % git merge
+    % git checkout master
+    % git status
     % git fetch upstream
     % git merge upstream/master
+    % git status
+    % git push  # origin master
+    ```
+
+1.  Make a new branch for a task.
+    ```sh
+    % git checkout -b issue-14-fitness
+    % git status
     ```
 
 1.  Edit your local files.
 
-1.  Check `upstream` again.
-
-1.  Stage, commit, and push to your `origin`:
+1.  Commit the change to your issue branch:
     ```sh
+    % git status
     % git diff
     % git add main.py
+    % git status
     % git commit -m "Create Individual class #2"
-    % git push origin
+    % git status
     ```
-    Don't forget to include the id of the relevant issue.
+    Don't forget to include the issue id in your comment.
+
+1.  Check `upstream` again.
+    Merge and rebase if necessary.
+    ```sh
+    % git checkout master
+    % git status
+    % git fetch upstream
+    % git merge upstream/master
+    % git status
+    % git checkout issue-14-fitness
+    % git rebase -i master
+    ```
+
+1.  Push the commit to your `origin`:
+    ```sh
+    % git push origin issue-14-fitness
+    ```
 
 1.  Send "Pull Request" with the button on your GitHub page
     ([Kazuki526](https://github.com/Kazuki526/practice-py), [hamazaki1990](https://github.com/hamazaki1990/practice-py)).
