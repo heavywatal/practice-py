@@ -3,8 +3,11 @@ from individual import Individual
 
 
 class Population:
-    def __init__(self, size):
-        self._inds = [Individual(x) for x in range(size)]
+    def __init__(self, n, mt=0, s=0):
+        self._mtfit = 1 + s
+        self._mtinds = [Individual(x, self._mtfit) for x in range(int(n*mt))]
+        self._wtinds = [Individual(x + int(n*mt)) for x in range(n - int(n*mt))]
+        self._inds = self._mtinds + self._wtinds
 
     def print_ids(self):
         print(self._inds)
@@ -18,14 +21,5 @@ class Population:
         self._inds[random.randrange(n)] = self._inds[random.randrange(n)]
 
 
-p1 = Population(10)
-
-for t in range(20):
-    p1.print_ids()
-    p1.next_genwf()
-
-p2 = Population(10)
-
-for t in range(20):
-    p2.print_ids()
-    p2.next_genmo()
+p1 = Population(10, 0.3, -0.2)
+p1.print_ids()

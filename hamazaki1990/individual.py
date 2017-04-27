@@ -1,10 +1,7 @@
 class Individual:
-    def __init__(self, n, *f):
+    def __init__(self, n, f=1.0):
         self._id = n
-        if f:
-            self._fitness = f
-        else:
-            self._fitness = 1.0
+        self._fitness = f
 
     def get_id(self):
         return self._id
@@ -20,12 +17,8 @@ ind = Individual(42)
 print(ind.get_id())
 print(ind.get_fitness())
 
-<<<<<<< HEAD
 ind2 = Individual(30, 0.8)
 print(ind2.get_id())
 print(ind2.get_fitness())
-=======
-ind = Individual(30, 0.8)
-print(ind.get_id())
-print(ind.get_fitness())
->>>>>>> origin
+print([ind, ind2])
+print([ind.get_fitness(), ind2.get_fitness()])
