@@ -20,6 +20,12 @@ ind = Individual(42)
 print(ind.get_id())
 print(ind.get_fitness())
 
+<<<<<<< HEAD
 ind2 = Individual(30, 0.8)
 print(ind2.get_id())
 print(ind2.get_fitness())
+=======
+ind = Individual(30, 0.8)
+print(ind.get_id())
+print(ind.get_fitness())
+>>>>>>> origin
