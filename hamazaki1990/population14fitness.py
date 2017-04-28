@@ -7,8 +7,8 @@ class Population:
         self._mfit = 1 + s
         self._wnum = int(size*(1-mt))
         self._mnum = int(size*mt)
-        self._winds = [Individual("A") for x in range(self._wnum)]
-        self._minds = [Individual("a", self._mfit) for x in range(self._mnum)]
+        self._minds = [Individual(x, self._mfit) for x in range(self._mnum)]
+        self._winds = [Individual(x + self._mnum) for x in range(self._wnum)]
         self._inds = self._minds + self._winds
 
     def print_ids(self):
