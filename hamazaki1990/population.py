@@ -14,6 +14,10 @@ class Population:
     def print_ids(self):
         print(self._inds)
 
+    def print_fitness(self):
+        fit = [x.get_fitness() for x in self._inds]
+        print(fit)
+
     def next_genwf(self):
         n = len(self._inds)
         self._inds = [self._inds[random.randrange(n)] for x in range(n)]
@@ -25,3 +29,4 @@ class Population:
 
 p1 = Population(10, 0.3, -0.2)
 p1.print_ids()
+p1.print_fitness()

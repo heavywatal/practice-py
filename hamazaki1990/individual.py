@@ -20,8 +20,3 @@ print(ind.get_fitness())
 ind2 = Individual(30, 0.8)
 print(ind2.get_id())
 print(ind2.get_fitness())
-<<<<<<< HEAD
-print([ind, ind2])
-=======
->>>>>>> origin
-print([ind.get_fitness(), ind2.get_fitness()])
