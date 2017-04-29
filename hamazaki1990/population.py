@@ -4,39 +4,38 @@ from individual import Individual
 
 class Population:
     def __init__(self, n, mt=0, s=0):
-        mfit = 1 + s
-        wnum = int(n*(1-mt))
-        mnum = int(n*mt)
-        self._minds = [Individual(x, mfit) for x in range(mnum)]
-        self._winds = [Individual(x + mnum) for x in range(wnum)]
-        self._inds = self._minds + self._winds
+        num_wild = int(n*(1-mt))
+        num_mutant = int(n*mt)
+        mutant_inds = [Individual(x, 1 + s) for x in range(num_mutant)]
+        wild_inds = [Individual(x + num_mutant) for x in range(num_wild)]
+        self._inds = mutant_inds + wild_inds
 
     def print_ids(self):
         print(self._inds)
 
     def print_fitness(self):
-        fit = [x.get_fitness() for x in self._inds]
-        print(fit)
+        fitness = [x.get_fitness() for x in self._inds]
+        print(fitness)
 
     def next_genwf(self):
-        fit = [x.get_fitness() for x in self._inds]
-        n = len(self._inds)
-        w = sum(fit)
-        nextgen = []
-        for y in range(n):
+        fitness = [x.get_fitness() for x in self._inds]
+        size = len(self._inds)
+        w = sum(fitness)
+        next_generation = []
+        for y in range(size):
             r = random.random()
-            for x in range(n):
-                if sum(fit[0: x])/w <= r < sum(fit[0: x + 1])/w:
-                    nextgen.append(self._inds[x])
-        self._inds = nextgen
+            for x in range(size):
+                if sum(fitness[0: x])/w <= r < sum(fitness[0: x + 1])/w:
+                    next_generation.append(self._inds[x])
+        self._inds = next_generation
 
     def next_genmo(self):
         fit = [x.get_fitness() for x in self._inds]
-        n = len(self._inds)
+        size = len(self._inds)
         w = sum(fit)
-        for x in range(n):
+        for x in range(size):
             if sum(fit[0: x])/w <= random.random() < sum(fit[0: x + 1])/w:
-                self._inds[random.randrange(n)] = self._inds[x]
+                self._inds[random.randrange(size)] = self._inds[x]
 
 
 p1 = Population(10, 0.3, 0.2)
