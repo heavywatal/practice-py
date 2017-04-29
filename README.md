@@ -64,7 +64,7 @@ Shared repository for python and pop-gen practice
 
 1.  See tasks/issues in "To Do" column of [Projects page](https://github.com/heavywatal/practice-py/projects/1).
 
-1.  Update your `master` branch:
+1.  Synchronize your `master` branch with `upstream/master`:
     ```sh
     % git checkout master
     % git status
@@ -73,16 +73,17 @@ Shared repository for python and pop-gen practice
     % git status
     % git push  # origin master
     ```
+    You may need to do `git reset --hard` and `git push --force` in some cases.
 
-1.  Make a new branch for a task.
+1.  Make a new branch for a task, and switch to it:
     ```sh
-    % git checkout -b issue-14-fitness
+    % git checkout -b issue-2-individual
     % git status
     ```
 
 1.  Edit your local files.
 
-1.  Commit the change to your issue branch:
+1.  Commit the change to the task branch:
     ```sh
     % git status
     % git diff
@@ -91,26 +92,31 @@ Shared repository for python and pop-gen practice
     % git commit -m "Create Individual class #2"
     % git status
     ```
-    Don't forget to include the issue id in your comment.
+    Please include the issue tag in your comment.
 
-1.  Check `upstream` again.
-    Merge and rebase if necessary.
+1.  Check `upstream` again, merge it to your `master`, and rebase the task branch if necessary:
     ```sh
-    % git checkout master
-    % git status
     % git fetch upstream
+    ##### if any updates are available
+    % git checkout master
     % git merge upstream/master
     % git status
-    % git checkout issue-14-fitness
+    % git checkout issue-2-individual
     % git rebase -i master
     ```
 
 1.  Push the commit to your `origin`:
     ```sh
-    % git push origin issue-14-fitness
+    % git push origin issue-2-individual
     ```
 
-1.  Send "Pull Request" with the button on your GitHub page
+1.  Send "Pull Request" from your GitHub page
     ([Kazuki526](https://github.com/Kazuki526/practice-py), [hamazaki1990](https://github.com/hamazaki1990/practice-py)).
+    Check commit log and diffs before submission.
+    Comments and questions are welcomed.
 
-1.  Your PR will be corrected and merged to [heavywatal/practice-py](https://github.com/heavywatal/practice-py).
+1.  You can commit and push again to your branch if you want to fix something.
+
+1.  The PR will be corrected and merged to [heavywatal/practice-py](https://github.com/heavywatal/practice-py).
+    You can move on to the next task before the PR merging.
+    Go back to the step 1.
