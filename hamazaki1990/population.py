@@ -3,9 +3,9 @@ from individual import Individual
 
 
 class Population:
-    def __init__(self, n, mt=0, s=0):
-        num_wild = int(n*(1-mt))
-        num_mutant = int(n*mt)
+    def __init__(self, n, mutantrate=0, s=0):
+        num_wild = int(n*(1-mutantrate))
+        num_mutant = int(n*mutantrate)
         mutant_inds = [Individual(x, 1 + s) for x in range(num_mutant)]
         wild_inds = [Individual(x + num_mutant) for x in range(num_wild)]
         self._inds = mutant_inds + wild_inds
