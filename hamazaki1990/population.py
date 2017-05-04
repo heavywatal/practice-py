@@ -39,40 +39,53 @@ class Population:
         i_dying = random.randrange(size)
         self._inds[i_dying] = roulettechoice(self._inds, cumsum_fitness)
 
+    def is_not_fixed(self):
+        for x in range(1, len(self._inds)):
+            if self._inds[0] != self._inds[x]:
+                return True
+        else:
+            return False
 
-p1_1 = Population(10)
-p1_1.print_ids()
-p1_1.print_fitness()
 
-for x in range(20):
-    p1_1.next_genwf()
+def main():
+    p1_1 = Population(10)
     p1_1.print_ids()
-p1_1.print_fitness()
+    p1_1.print_fitness()
+    print(p1_1.is_not_fixed())
 
-p1_2 = Population(10, 0.3, 0.2)
-p1_2.print_ids()
-p1_2.print_fitness()
+    for x in range(20):
+        p1_1.next_genwf()
+        p1_1.print_ids()
+        p1_1.print_fitness()
+    print(p1_1.is_not_fixed())
 
-for x in range(20):
-    p1_2.next_genwf()
+    p1_2 = Population(10, 0.3, 0.2)
     p1_2.print_ids()
-p1_2.print_fitness()
+    p1_2.print_fitness()
 
+    for x in range(20):
+        p1_2.next_genwf()
+        p1_2.print_ids()
+    p1_2.print_fitness()
 
-p2_1 = Population(10)
-p2_1.print_ids()
-p2_1.print_fitness()
-
-for x in range(20):
-    p2_1.next_genmo()
+    p2_1 = Population(10)
     p2_1.print_ids()
-p2_1.print_fitness()
+    p2_1.print_fitness()
 
-p2_2 = Population(10, 0.3, 0.2)
-p2_2.print_ids()
-p2_2.print_fitness()
+    for x in range(20):
+        p2_1.next_genmo()
+        p2_1.print_ids()
+        p2_1.print_fitness()
 
-for x in range(20):
-    p2_2.next_genmo()
+    p2_2 = Population(10, 0.3, 0.2)
     p2_2.print_ids()
-p2_2.print_fitness()
+    p2_2.print_fitness()
+
+    for x in range(20):
+        p2_2.next_genmo()
+        p2_2.print_ids()
+    p2_2.print_fitness()
+
+
+if __name__ == '__main__':
+    main()

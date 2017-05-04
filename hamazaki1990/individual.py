@@ -13,10 +13,15 @@ class Individual:
         return str(self._id)
 
 
-ind = Individual(42)
-print(ind.get_id())
-print(ind.get_fitness())
+def main():
+    ind = Individual(42)
+    print(ind.get_id())
+    print(ind.get_fitness())
 
-ind2 = Individual(30, 0.8)
-print(ind2.get_id())
-print(ind2.get_fitness())
+    ind2 = Individual(30, 0.8)
+    print(ind2.get_id())
+    print(ind2.get_fitness())
+
+
+if __name__ == '__main__':
+    main()
