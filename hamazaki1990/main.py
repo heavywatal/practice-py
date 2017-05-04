@@ -77,15 +77,9 @@ def repeat_simmo(trials, n, mutantrate=0, s=0):
     return result
 
 
-test = [0, 0, 1, 2, 3]
-print(test.count(0))
-test2 = [test.count(x) for x in range(len(test))]
-print(test2)
-test3 = {x: test.count(x)/len(test) for x in range(len(test))}
-print(test3)
-
 p1 = Population(10, 0.1, 0.5)
 p1.print_ids()
+print(p1._inds.count(1))
 print(get_heterogeneity(p1))
 print(simulate_fixwf(p1))
 
