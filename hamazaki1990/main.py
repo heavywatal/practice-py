@@ -3,7 +3,7 @@
 from population import Population
 
 
-def get_heterogeneity(Population):
+def get_heterogeneity(Population):  # fixed or not
     Population_ids = [x.get_id() for x in Population._inds]
     for x in range(1, len(Population_ids)):
         if Population_ids[0] != Population_ids[x]:
@@ -13,46 +13,52 @@ def get_heterogeneity(Population):
         return False
 
 
-def simulate_fixwf(Population):
-    cnt = 0
+def simulate_fixwf(Population):  # simulate fixation in Wrigft-Fisher model
+    time = 0
     while get_heterogeneity(Population):
         Population.next_genwf()
-        Population.print_ids()
-        cnt += 1
+        time += 1
     else:
-        print(cnt)
+        winner_id = Population._inds[0]
+        return time, winner_id
 
 
-def simulate_fixmo(Population):
-    cnt = 0
+def repeat_simwf(trials, n, mutantrate=0, s=0):
+    # repeat simulation in Wrigft-Fisher model
+    result = []
+    for x in range(trials):
+        population = Population(n, mutantrate, s)
+        result.append(simulate_fixwf(population))
+    return result
+
+
+def simulate_fixmo(Population):   # simulate fixation in Moran model
+    time = 0
     while get_heterogeneity(Population):
         Population.next_genmo()
-        Population.print_ids()
-        cnt += 1
+        time += 1
     else:
-        print(cnt)
+        winner_id = Population._inds[0]
+        return time, winner_id
 
 
-p = Population(5)
-p.print_ids()
-print(get_heterogeneity(p))
-cnt = 1
-while get_heterogeneity(p):
-    p.next_genwf()
-    p.print_ids()
-    print(get_heterogeneity(p))
-    print(cnt)
-    cnt += 1
-winner = p._inds[0]
-print(winner.get_id())
+def repeat_simmo(trials, n, mutantrate=0, s=0):
+    # repeat simulation in Moran model
+    result = []
+    for x in range(trials):
+        population = Population(n, mutantrate, s)
+        result.append(simulate_fixmo(population))
+    return result
 
-p1 = Population(5)
+
+p1 = Population(10, 0.1, 0.5)
 p1.print_ids()
 print(get_heterogeneity(p1))
-simulate_fixwf(p1)
+print(simulate_fixwf(p1))
+print(repeat_simwf(5, 10, 0.1, 0.5))
 
-
-p2 = Population(5)
+p2 = Population(10, 0.1, 0.5)
 p2.print_ids()
 print(get_heterogeneity(p2))
-simulate_fixmo(p2)
+print(simulate_fixmo(p2))
+print(repeat_simmo(5, 10, 0.1, 0.5))
