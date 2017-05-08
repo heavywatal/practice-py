@@ -18,9 +18,7 @@ def simulate_fixwf(Population):  # simulate fixation in Wrigft-Fisher model
     while Population.is_not_fixed():
         Population.next_genwf()
         time += 1
-    else:
-        winner_id = Population._inds[0]
-        return time, winner_id
+    return time, Population._inds[0].get_id()
 
 
 def simulate_fixmo(Population):   # simulate fixation in Moran model
@@ -28,82 +26,36 @@ def simulate_fixmo(Population):   # simulate fixation in Moran model
     while Population.is_not_fixed():
         Population.next_genmo()
         time += 1
-    else:
-        winner_id = Population._inds[0]
-        return time, winner_id
+    return time, Population._inds[0].get_id()
 
 
-class Repeat_wf:
-    def __init__(self, repeat, n, mutantrate=0, s=0):
-        self._ancestors = [x for x in range(n)]
+class Repeater:
+    def __init__(self, function, repeat, n, mutantrate=0, s=0):
         result = []
         for x in range(repeat):
             population = Population(n, mutantrate, s)
-            result.append(simulate_fixwf(population))
-        self._fixtime_wf = [result[x][0] for x in range(len(result))]
-        self._fixid_wf = [result[x][1] for x in range(len(result))]
-
-    def get_fixtime_wf(self):
-        return self._fixtime_wf
-
-    def ave_fixtime_wf(self):
-        print(calculate_ave(self._fixtime_wf))
-
-    def var_fixtime_wf(self):
-        print(calculate_var(self._fixtime_wf))
-
-    def get_fixid_wf(self):
-        return self._fixid_wf
-
-    def fixprob_wf(self):
-        repeat = len(self._fixid_wf)
-        fixid = [self._fixid_wf[x].get_id() for x in range(repeat)]
-        wins = [0 for i in range(len(self._ancestors))]
+            result.append(function(population))
+        self._fixtime = [result[x][0] for x in range(len(result))]
+        fixid = [result[x][1] for x in range(len(result))]
+        wins = [0 for i in range(n)]
         for x in fixid:
             wins[x] += 1
-        fixprob = {x: wins[x]/repeat for x in range(len(self._ancestors))}
-        print(fixprob)
+        self._fixprob = {i: wins[i]/repeat for i in range(n)}
+
+    def get_fixtime(self):
+        return self._fixtime
+
+    def get_fixprob(self):
+        return self._fixprob
 
 
-class Repeat_moran:
-    def __init__(self, repeat, n, mutantrate=0, s=0):
-        self._ancestors = [x for x in range(n)]
-        result = []
-        for x in range(repeat):
-            population = Population(n, mutantrate, s)
-            result.append(simulate_fixmo(population))
-        self._fixtime_mo = [result[x][0] for x in range(len(result))]
-        self._fixid_mo = [result[x][1] for x in range(len(result))]
-
-    def get_fixtime_mo(self):
-        return self._fixtime_mo
-
-    def ave_fixtime_mo(self):
-        print(calculate_ave(self._fixtime_mo))
-
-    def var_fixtime_mo(self):
-        print(calculate_var(self._fixtime_mo))
-
-    def get_fixid_mo(self):
-        return self._fixid_mo
-
-    def fixprob_mo(self):
-        repeat = len(self._fixid_mo)
-        fixid = [self._fixid_mo[x].get_id() for x in range(repeat)]
-        wins = [0 for i in range(len(self._ancestors))]
-        for x in fixid:
-            wins[x] += 1
-        fixprob = {x: wins[x]/repeat for x in range(len(self._ancestors))}
-        print(fixprob)
+trial1 = Repeater(simulate_fixwf, 1000, 10, 0.1, -0.05)
+print(calculate_ave(trial1.get_fixtime()))
+print(calculate_var(trial1.get_fixtime()))
+print(trial1.get_fixprob())
 
 
-trial1 = Repeat_wf(10000, 10, 0.1, -0.5)
-trial1.ave_fixtime_wf()
-trial1.var_fixtime_wf()
-trial1.fixprob_wf()
-
-
-trial2 = Repeat_moran(10000, 10, 0.1, -0.5)
-trial2.ave_fixtime_mo()
-trial2.var_fixtime_mo()
-trial2.fixprob_mo()
+trial2 = Repeater(simulate_fixmo, 1000, 10, 0.1, -0.05)
+print(calculate_ave(trial2.get_fixtime()))
+print(calculate_var(trial2.get_fixtime()))
+print(trial2.get_fixprob())
