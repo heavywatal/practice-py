@@ -106,17 +106,13 @@ class Repeat_moran:
         print(fixprob)
 
 
-trial1 = Repeat_wf(5, 10)
-print(trial1.get_fixtime_wf())
+trial1 = Repeat_wf(10000, 10, 0.1, -0.5)
 trial1.ave_fixtime_wf()
 trial1.var_fixtime_wf()
-print(trial1.get_fixid_wf())
 trial1.fixprob_wf()
 
 
-trial2 = Repeat_moran(5, 10)
-print(trial2.get_fixtime_mo())
+trial2 = Repeat_moran(10000, 10, 0.1, -0.5)
 trial2.ave_fixtime_mo()
 trial2.var_fixtime_mo()
-print(trial2.get_fixid_mo())
 trial2.fixprob_mo()
