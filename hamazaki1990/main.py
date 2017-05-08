@@ -106,12 +106,6 @@ class Repeat_moran:
         print(fixprob)
 
 
-p1 = Population(10, 0.1, 0.5)
-p1.print_ids()
-print(p1._inds.count(1))
-print(p1.is_not_fixed())
-print(simulate_fixwf(p1))
-
 trial1 = Repeat_wf(5, 10)
 print(trial1.get_fixtime_wf())
 trial1.ave_fixtime_wf()
@@ -119,11 +113,6 @@ trial1.var_fixtime_wf()
 print(trial1.get_fixid_wf())
 trial1.fixprob_wf()
 
-p2 = Population(10, 0.1)
-p2.print_ids()
-print(p2.is_not_fixed())
-print(simulate_fixmo(p2))
-print(repeat_simmo(5, 10, 0.1, 0.5))
 
 trial2 = Repeat_moran(5, 10)
 print(trial2.get_fixtime_mo())
