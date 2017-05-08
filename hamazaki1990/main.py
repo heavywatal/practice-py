@@ -65,15 +65,6 @@ class Repeat_wf:
         print(fixprob)
 
 
-def repeat_simmo(repeat, n, mutantrate=0, s=0):
-    # repeat simulation in Moran model
-    result = []
-    for x in range(repeat):
-        population = Population(n, mutantrate, s)
-        result.append(simulate_fixmo(population))
-    return result
-
-
 class Repeat_moran:
     def __init__(self, repeat, n, mutantrate=0, s=0):
         self._ancestors = [x for x in range(n)]
