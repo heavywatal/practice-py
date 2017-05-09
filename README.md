@@ -68,18 +68,18 @@ Shared repository for python and pop-gen practice
     ```sh
     % git checkout master
     % git status
-    % git fetch upstream
+    % git fetch --all
     % git merge upstream/master
     % git status
     % git push  # origin master
     ```
-    You may need to do `git reset --hard` and `git push --force` in some cases.
 
-1.  Make a new branch for a task, and switch to it:
+1.  Make a new branch from `master` for each task, and switch to it:
     ```sh
     % git checkout -b issue-2-individual
     % git status
     ```
+    Do not commit to `master` or old branches.
 
 1.  Edit your local files.
 
@@ -109,6 +109,7 @@ Shared repository for python and pop-gen practice
     ```sh
     % git push origin issue-2-individual
     ```
+    You may need to rename the branch or `push --force` to solve a conflict.
 
 1.  Send "Pull Request" from your GitHub page
     ([Kazuki526](https://github.com/Kazuki526/practice-py), [hamazaki1990](https://github.com/hamazaki1990/practice-py)).
@@ -118,5 +119,6 @@ Shared repository for python and pop-gen practice
 1.  You can commit and push again to your branch if you want to fix something.
 
 1.  The PR will be corrected and merged to [heavywatal/practice-py](https://github.com/heavywatal/practice-py).
-    You can move on to the next task before the PR merging.
-    Go back to the step 1.
+    You can go back to the step 1 to move on to the next task before the PR merging.
+
+1.  After PR merging, the task branch can be deleted by pushing a button on the PR page or by pushing an empty branch with `git push origin :issue-2-individual`
