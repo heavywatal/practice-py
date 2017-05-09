@@ -1,13 +1,25 @@
 #! /usr/local/bin/env python
 
 
+class Individual:
+    def __init__(self, idn):
+        self._id = idn
+
+
 class Population:
-    def __init__(self, *population):
-        self._individual = population
+    def __init__(self, population_n):
+        self._individuals = []
+        for i in range(population_n):
+            self._individuals.append(Individual(i))
 
     def print_id_list(self):
-        print(" ".join(self._individual))
+        for individual in self._individuals:
+            print(individual._id, end=' ')
+        print('')
 
 
-pop_a = Population("a", "b", "c", "d")
-pop_a.print_id_list()
+sample_population = Population(10)
+sample_population.print_id_list()
+
+sample1 = Individual(1)
+print(sample1)
