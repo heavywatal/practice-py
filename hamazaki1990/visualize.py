@@ -12,27 +12,26 @@ def calculate_var(seq):
     return sum(sqd)/len(seq)
 
 
-def change_allelewf(Population):  # simulate fixation in Wrigft-Fisher model
-    time = 0
+def change_allelewf(Population):
+    fixprocess = [Population._inds]
     while Population.is_not_fixed():
         Population.next_genwf()
-        Population.print_ids()
-        time += 1
-    else:
-        winner_id = Population._inds[0]
-        return time, winner_id
+        fixprocess.append(Population._inds)
+    return fixprocess
 
 
-def simulate_fixmo(Population):   # simulate fixation in Moran model
-    time = 0
+def change_allelemo(Population):
+    fixprocess = [Population._inds]
     while Population.is_not_fixed():
         Population.next_genmo()
-        time += 1
-    else:
-        winner_id = Population._inds[0]
-        return time, winner_id
+        fixprocess.append(Population._inds)
+    return fixprocess
 
 
 p1 = Population(10)
-data = list(change_allelewf(p1))
-data.to_csv()
+data = pd.DataFrame(change_allelewf(p1))
+print(data)
+
+p2 = Population(10)
+data = pd.DataFrame(change_allelemo(p2))
+print(data)
