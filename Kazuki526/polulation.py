@@ -33,7 +33,7 @@ class Population:
         next_gen = []
         for pn in range(len(self._individuals)):
             next_gen.append(random.choice(self._individuals))
-        self._individuals = sorted(next_gen, key=lambda individual: individual._id)
+        self._individuals = sorted(next_gen, key=lambda ind: ind.id)
 
 
 sample_population = Population(10)
