@@ -35,12 +35,18 @@ class Population:
             next_gen.append(random.choice(self._individuals))
         self._individuals = sorted(next_gen, key=lambda ind: ind.id)
 
+    def moran_model(self):
+        reproduct = random.choice(self._individuals)
+        del self._individuals[random.randint(0, len(self._individuals) - 1)]
+        self._individuals.append(reproduct)
+        self._individuals.sort(key=lambda ind: ind.id)
+
 
 sample_population = Population(10)
 sample_population.print_id()
-print("go to next generation")
-sample_population.wright_fisher_model()
+print("go to next generation moran model")
+sample_population.moran_model()
 sample_population.print_id()
-print("go to next generation again")
-sample_population.wright_fisher_model()
+print("go to next generation again moran model")
+sample_population.moran_model()
 sample_population.print_id()
