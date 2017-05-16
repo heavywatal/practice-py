@@ -36,9 +36,8 @@ class Population:
         self._individuals = sorted(next_gen, key=lambda ind: ind.id)
 
     def moran_model(self):
-        reproduct = random.choice(self._individuals)
-        del self._individuals[random.randint(0, len(self._individuals) - 1)]
-        self._individuals.append(reproduct)
+        i_dying = random.randrange(len(self._individuals))
+        del self._individuals[i_dying] = random.choice(self._individuals)
         self._individuals.sort(key=lambda ind: ind.id)
 
 
