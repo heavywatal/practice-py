@@ -37,7 +37,7 @@ class Population:
 
     def moran_model(self):
         i_dying = random.randrange(len(self._individuals))
-        del self._individuals[i_dying] = random.choice(self._individuals)
+        self._individuals[i_dying] = random.choice(self._individuals)
         self._individuals.sort(key=lambda ind: ind.id)
 
 
