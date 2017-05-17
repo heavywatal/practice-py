@@ -1,37 +1,35 @@
+import csv
 import pandas as pd
 from population import Population
 
 
-def calculate_ave(seq):
-    return sum(seq)/len(seq)
-
-
-def calculate_var(seq):
-    ave = calculate_ave(seq)
-    sqd = [(seq[x] - ave)**2 for x in range(len(seq))]
-    return sum(sqd)/len(seq)
-
-
-def change_allelewf(Population):
-    fixprocess = [Population._inds]
-    while Population.is_not_fixed():
-        Population.next_genwf()
-        fixprocess.append(Population._inds)
+def change_allelewf(population):
+    fit_list = population.get_fitnesses()
+    fixprocess = [1 - fit_list.count(1.0)/len(fit_list)]
+    while population.mutation_is_not_fixed():
+        population.next_genwf()
+        fit_list = population.get_fitnesses()
+        mutantrate = 1 - fit_list.count(1.0)/len(fit_list)
+        fixprocess.append(mutantrate)
     return fixprocess
 
 
-def change_allelemo(Population):
-    fixprocess = [Population._inds]
-    while Population.is_not_fixed():
-        Population.next_genmo()
-        fixprocess.append(Population._inds)
+def change_allelemo(population):
+    fit_list = population.get_fitnesses()
+    fixprocess = [1 - fit_list.count(1.0)/len(fit_list)]
+    while population.mutation_is_not_fixed():
+        population.next_genmo()
+        fit_list = population.get_fitnesses()
+        mutantrate = 1 - fit_list.count(1.0)/len(fit_list)
+        fixprocess.append(mutantrate)
     return fixprocess
 
 
-p1 = Population(10)
-data = pd.DataFrame(change_allelewf(p1))
-print(data)
+csvfile1 = open("allelechangewf.csv", "w", encoding="utf-8")
+writer = csv.writer(csvfile1)
+p1 = Population(10, 0.1, 0.5)
+writer.writerow(change_allelewf(p1))
 
-p2 = Population(10)
-data = pd.DataFrame(change_allelemo(p2))
-print(data)
+
+p2 = Population(10, 0.1, 0.5)
+print(change_allelemo(p2))
