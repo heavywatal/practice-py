@@ -23,6 +23,11 @@ class Population:
         fitness = [x.get_fitness() for x in self._inds]
         return fitness
 
+    def get_mutantfreq(self):
+        fitness = [x.get_fitness() for x in self._inds]
+        mutantfreq = 1 - fitness.count(1.0)/len(fitness)
+        return mutantfreq
+
     def next_genwf(self):
         fitness = [x.get_fitness() for x in self._inds]
         size = len(self._inds)
@@ -74,6 +79,7 @@ def main():
     print(p1_2.get_fitnesses())
     print(p1_2.is_not_fixed())
     print(p1_2.mutation_is_not_fixed())
+    print(p1_2.get_mutantfreq())
 
     for x in range(20):
         p1_2.next_genwf()

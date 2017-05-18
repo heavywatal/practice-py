@@ -1,35 +1,39 @@
 import csv
-import pandas as pd
 from population import Population
 
 
 def change_allelewf(population):
-    fit_list = population.get_fitnesses()
-    fixprocess = [1 - fit_list.count(1.0)/len(fit_list)]
+    t = 0
+    fixprocess = [[t, population.get_mutantfreq()]]
     while population.mutation_is_not_fixed():
+        t += 1
         population.next_genwf()
-        fit_list = population.get_fitnesses()
-        mutantrate = 1 - fit_list.count(1.0)/len(fit_list)
-        fixprocess.append(mutantrate)
+        fixprocess.append([t, population.get_mutantfreq()])
     return fixprocess
 
 
 def change_allelemo(population):
-    fit_list = population.get_fitnesses()
-    fixprocess = [1 - fit_list.count(1.0)/len(fit_list)]
+    t = 0
+    fixprocess = [[t, population.get_mutantfreq()]]
     while population.mutation_is_not_fixed():
+        t += 1
         population.next_genmo()
-        fit_list = population.get_fitnesses()
-        mutantrate = 1 - fit_list.count(1.0)/len(fit_list)
-        fixprocess.append(mutantrate)
+        fixprocess.append([t, population.get_mutantfreq()])
     return fixprocess
 
 
 csvfile1 = open("allelechangewf.csv", "w", encoding="utf-8")
 writer = csv.writer(csvfile1)
 p1 = Population(10, 0.1, 0.5)
-writer.writerow(change_allelewf(p1))
+fixprocesswf = change_allelewf(p1)
+writer.writerow(["generation", "derived_allele_frequency"])
+for x in range(len(fixprocesswf)):
+    writer.writerow(fixprocesswf[x])
 
-
-p2 = Population(10, 0.1, 0.5)
-print(change_allelemo(p2))
+csvfile2 = open("allelechangemo.csv", "w", encoding="utf-8")
+writer = csv.writer(csvfile2)
+p1 = Population(10, 0.1, 0.5)
+fixprocessmo = change_allelemo(p1)
+writer.writerow(["generation", "derived_allele_frequency"])
+for x in range(len(fixprocessmo)):
+    writer.writerow(fixprocessmo[x])
