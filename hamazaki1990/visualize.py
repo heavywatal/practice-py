@@ -22,18 +22,17 @@ def change_allelemo(population):
     return fixprocess
 
 
-csvfile1 = open("allelechangewf.csv", "w", encoding="utf-8")
-writer = csv.writer(csvfile1)
-p1 = Population(10, 0.1, 0.5)
-fixprocesswf = change_allelewf(p1)
-writer.writerow(["generation", "derived_allele_frequency"])
-for x in range(len(fixprocesswf)):
-    writer.writerow(fixprocesswf[x])
+def output_allelechange(filename, population, function):
+    with open(filename, "w", encoding="utf-8") as outfile:
+        writer = csv.writer(outfile)
+        writer.writerow(["generation", "derived_allele_frequency"])
+        fixprocess = function(population)
+        for x in range(len(fixprocess)):
+            writer.writerow(fixprocess[x])
 
-csvfile2 = open("allelechangemo.csv", "w", encoding="utf-8")
-writer = csv.writer(csvfile2)
-p1 = Population(10, 0.1, 0.5)
-fixprocessmo = change_allelemo(p1)
-writer.writerow(["generation", "derived_allele_frequency"])
-for x in range(len(fixprocessmo)):
-    writer.writerow(fixprocessmo[x])
+
+p1 = Population(10, 0.1, 0.2)
+output_allelechange("allelefreqwf.csv", p1, change_allelewf)
+
+p2 = Population(10, 0.1, 0.5)
+output_allelechange("allelefreqmo.csv", p2, change_allelemo)
