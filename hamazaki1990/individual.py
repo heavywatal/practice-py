@@ -1,3 +1,6 @@
+from decimal import Decimal
+
+
 class Individual:
     def __init__(self, n, f=1.0):
         self._id = n
@@ -11,16 +14,13 @@ class Individual:
 
     def __repr__(self):
         return str(self._id)
+        return Decimal(self._fitness)
 
 
 def main():
     ind = Individual(42)
     print(ind.get_id())
     print(ind.get_fitness())
-
-    ind2 = Individual(30, 0.8)
-    print(ind2.get_id())
-    print(ind2.get_fitness())
 
 
 if __name__ == '__main__':

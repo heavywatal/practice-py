@@ -16,12 +16,17 @@ class Population:
         wild_inds = [Individual(x) for x in range(num_mutant, n)]
         self._inds = mutant_inds + wild_inds
 
-    def print_ids(self):
-        print(self._inds)
+    def get_ids(self):
+        return self._inds
 
-    def print_fitness(self):
+    def get_fitnesses(self):
         fitness = [x.get_fitness() for x in self._inds]
-        print(fitness)
+        return fitness
+
+    def get_mutantfreq(self):
+        fitness = [x.get_fitness() for x in self._inds]
+        mutantfreq = 1 - fitness.count(1.0)/len(fitness)
+        return mutantfreq
 
     def next_genwf(self):
         fitness = [x.get_fitness() for x in self._inds]
@@ -46,45 +51,60 @@ class Population:
         else:
             return False
 
+    def mutation_is_not_fixed(self):
+        fitness = [x.get_fitness() for x in self._inds]
+        for x in range(1, len(fitness)):
+            if fitness[0] != fitness[x]:
+                return True
+        else:
+            return False
+
 
 def main():
     p1_1 = Population(10)
-    p1_1.print_ids()
-    p1_1.print_fitness()
+    print(p1_1.get_ids())
+    print(p1_1.get_fitnesses())
     print(p1_1.is_not_fixed())
+    print(p1_1.mutation_is_not_fixed())
 
     for x in range(20):
         p1_1.next_genwf()
-        p1_1.print_ids()
-        p1_1.print_fitness()
+        print(p1_1.get_ids())
+        print(p1_1.get_fitnesses())
     print(p1_1.is_not_fixed())
+    print(p1_1.mutation_is_not_fixed())
 
     p1_2 = Population(10, 0.3, 0.2)
-    p1_2.print_ids()
-    p1_2.print_fitness()
+    print(p1_2.get_ids())
+    print(p1_2.get_fitnesses())
+    print(p1_2.is_not_fixed())
+    print(p1_2.mutation_is_not_fixed())
+    print(p1_2.get_mutantfreq())
 
     for x in range(20):
         p1_2.next_genwf()
-        p1_2.print_ids()
-    p1_2.print_fitness()
+        print(p1_2.get_ids())
+    print(p1_2.get_fitnesses())
+    print(p1_2.is_not_fixed())
+    print(p1_2.mutation_is_not_fixed())
 
     p2_1 = Population(10)
-    p2_1.print_ids()
-    p2_1.print_fitness()
+    print(p2_1.get_ids())
+    print(p2_1.get_fitnesses())
 
     for x in range(20):
         p2_1.next_genmo()
-        p2_1.print_ids()
-        p2_1.print_fitness()
+        print(p2_1.get_ids())
+    print(p2_1.get_fitnesses())
 
     p2_2 = Population(10, 0.3, 0.2)
-    p2_2.print_ids()
-    p2_2.print_fitness()
+    print(p2_2.get_ids())
+    print(p2_2.get_fitnesses())
 
     for x in range(20):
         p2_2.next_genmo()
-        p2_2.print_ids()
-    p2_2.print_fitness()
+        print(p2_2.get_ids())
+    print(p2_2.get_fitnesses())
 
 
 if __name__ == '__main__':
