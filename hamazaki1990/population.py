@@ -10,10 +10,10 @@ def roulettechoice(individuals, cumsum_fitness):
 
 
 class Population:
-    def __init__(self, n, mutantrate=0, s=0):
-        num_mutant = int(n * mutantrate)
-        mutant_inds = [Individual(x, 1 + s) for x in range(num_mutant)]
-        wild_inds = [Individual(x) for x in range(num_mutant, n)]
+    def __init__(self, n, mutant=0, s=0, mutationrate=0.0):
+        num_mutant = int(n * mutant)
+        mutant_inds = [Individual(x, 1 + s, mutationrate) for x in range(num_mutant)]
+        wild_inds = [Individual(x, 1, mutationrate) for x in range(num_mutant, n)]
         self._inds = mutant_inds + wild_inds
 
     def get_ids(self):
@@ -43,6 +43,25 @@ class Population:
         cumsum_fitness = [sum(fitness[:i]) for i in range(1, size + 1)]
         i_dying = random.randrange(size)
         self._inds[i_dying] = roulettechoice(self._inds, cumsum_fitness)
+
+    def acquire_mutations(self):
+        [x.acquire_mutation() for x in self._inds]
+        genotypes = [x.get_genotype() for x in self._inds]
+        return genotypes
+
+    def get_mutationlist(self):
+        genotypes = [x.get_genotype() for x in self._inds]
+        mutation_sites = []
+        for x in range(len(genotypes)):
+            mutation_sites.extend(genotypes[x])
+        mutation_sites = sorted(mutation_sites)
+        mutation_list = [[0 for x in range(len(mutation_sites))] for y in range(len(self._inds))]
+        for x in range(len(self._inds)):
+            for y in range(len(genotypes[x])):
+                i = mutation_sites.index(genotypes[x][y])
+                if i != "ValueError":
+                    mutation_list[x][i] += 1
+        print(mutation_list)
 
     def is_not_fixed(self):
         for x in range(1, len(self._inds)):
@@ -105,6 +124,13 @@ def main():
         p2_2.next_genmo()
         print(p2_2.get_ids())
     print(p2_2.get_fitnesses())
+
+    p3_1 = Population(10, 0, 0, 0.8)
+    p3_1.get_mutationlist()
+    print(p3_1.acquire_mutations())
+    p3_1.get_mutationlist()
+    print(p3_1.acquire_mutations())
+    p3_1.get_mutationlist()
 
 
 if __name__ == '__main__':
