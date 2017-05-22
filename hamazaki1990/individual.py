@@ -20,14 +20,12 @@ class Individual:
     def acquire_mutation(self):
         r = random.random()
         next_genotype = self._genotype
-        if self._mutationrate > r:
+        if r < self._mutationrate:
             next_genotype.append(random.random())
         self._genotype = next_genotype
 
     def __repr__(self):
         return str(self._id)
-        return str(self._fitness)
-        return str(self._genotype)
 
 
 def main():

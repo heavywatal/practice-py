@@ -49,19 +49,19 @@ class Population:
         genotypes = [x.get_genotype() for x in self._inds]
         return genotypes
 
-    def get_mutationlist(self):
+    def list_mutation(self):
         genotypes = [x.get_genotype() for x in self._inds]
-        mutation_sites = []
-        for x in range(len(genotypes)):
-            mutation_sites.extend(genotypes[x])
-        mutation_sites = sorted(mutation_sites)
-        mutation_list = [[0 for x in range(len(mutation_sites))] for y in range(len(self._inds))]
-        for x in range(len(self._inds)):
-            for y in range(len(genotypes[x])):
-                i = mutation_sites.index(genotypes[x][y])
-                if i != "ValueError":
-                    mutation_list[x][i] += 1
-        print(mutation_list)
+        m_sites = []
+        for x in genotypes:
+            m_sites.extend(x)
+        m_sites = sorted(m_sites)
+        m_list = [[0 for x in range(len(m_sites))] for y in range(len(self._inds))]
+        for i in range(len(self._inds)):
+            for j in range(len(genotypes[i])):
+                k = m_sites.index(genotypes[i][j])
+                if k != "ValueError":
+                    m_list[i][k] += 1
+        print(m_list)
 
     def is_not_fixed(self):
         for x in range(1, len(self._inds)):
@@ -126,11 +126,11 @@ def main():
     print(p2_2.get_fitnesses())
 
     p3_1 = Population(10, 0, 0, 0.8)
-    p3_1.get_mutationlist()
+    p3_1.list_mutation()
     print(p3_1.acquire_mutations())
-    p3_1.get_mutationlist()
+    p3_1.list_mutation()
     print(p3_1.acquire_mutations())
-    p3_1.get_mutationlist()
+    p3_1.list_mutation()
 
 
 if __name__ == '__main__':
