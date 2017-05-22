@@ -39,21 +39,22 @@ class Population:
     def print_id(self):
         print(self._individuals)
 
-    def get_fitls(self):
-        fit_ls = []
+    def get_fitness_list(self):
+        fitness_list = []
         for ind in self._individuals:
-            fit_ls.append(ind.fit)
-        return(fit_ls)
+            fitness_list.append(ind.fit)
+        return(fitness_list)
 
     def wright_fisher_model(self):
         next_gen = random.choices(self._individuals,
-                                  weights=self.get_fitls(),
+                                  weights=self.get_fitness_list(),
                                   k=len(self._individuals))
         self._individuals = sorted(next_gen, key=lambda ind: ind.id)
 
     def moran_model(self):
         i_dying = random.randrange(len(self._individuals))
-        born = random.choices(self._individuals, weights=self.get_fitls())[0]
+        born = random.choices(self._individuals,
+                              weights=self.get_fitness_list())[0]
         self._individuals[i_dying] = born
         self._individuals.sort(key=lambda ind: ind.id)
 
