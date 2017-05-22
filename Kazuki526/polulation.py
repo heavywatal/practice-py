@@ -4,9 +4,9 @@ import random
 
 
 class Individual:
-    def __init__(self, idn, fitnes):
+    def __init__(self, idn, fitness=1):
         self._id = idn
-        self._fit = fitnes
+        self._fit = fitness
 
     @property
     def id(self):
@@ -21,18 +21,15 @@ class Individual:
 
 
 class Population:
-    def __init__(self, population_n, *input_fit_ls):
+    def __init__(self, population_n, mutant_n=0, s=0):
+        if(population_n < mutant_n):
+            exit("ERROR: mutant_n larger than population_n")
         self._individuals = []
-
-        if (population_n != len(input_fit_ls))and(len(input_fit_ls) != 0):
-            print("inputed fitness list length is not equal to populetion num")
-            print("so "+str(len(input_fit_ls))+"(inputed fitness list", end='')
-            print(" length)/"+str(population_n), end='')
-            print(" from the front fitness set to inputed fitnes")
-        fit_ls = [1] * population_n
-        fit_ls[:len(input_fit_ls)] = input_fit_ls
         for i in range(population_n):
-            self._individuals.append(Individual(i, fit_ls[i]))
+            if i < mutant_n:
+                self._individuals.append(Individual(i, 1 + s))
+            else:
+                self._individuals.append(Individual(i))
 
     def print_id_list(self):
         for individual in self._individuals:
@@ -56,27 +53,27 @@ class Population:
 
     def moran_model(self):
         i_dying = random.randrange(len(self._individuals))
-        self._individuals[i_dying] = random.choices(self._individuals,
-                                                    weights=self.get_fitls())[0]
+        born = random.choices(self._individuals, weights=self.get_fitls())[0]
+        self._individuals[i_dying] = born
         self._individuals.sort(key=lambda ind: ind.id)
 
 
-print("wright_fisher")
-sample_pwf = Population(10, 1.5, 1.5, 1.5, 1.5, 1.5)
+print("wright_fisher　(0~4 fitnes 1.5)")
+sample_pwf = Population(10, 5, 0.5)
 sample_pwf.print_id()
-print("go to next generation wright_fisher model")
+print("go to next generation")
 sample_pwf.wright_fisher_model()
 sample_pwf.print_id()
-print("go to next generation again wright_fisher model")
+print("go to next generation again")
 sample_pwf.wright_fisher_model()
 sample_pwf.print_id()
 
-print("\nmoran model")
-sample_pm = Population(10, 1.5, 1.5, 1.5, 1.5, 1.5)
+print("\nmoran model (0~4 fitnes 1.5)")
+sample_pm = Population(10, 5, 0.5)
 sample_pm.print_id()
-print("go to next generation moran model")
+print("go to next generation")
 sample_pm.moran_model()
 sample_pm.print_id()
-print("go to next generation again moran model")
+print("go to next generation again")
 sample_pm.moran_model()
 sample_pm.print_id()
