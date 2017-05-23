@@ -1,0 +1,9 @@
+sudo: false
+language: python
+cache: pip
+python:
+  - "3.6"
+install:
+  - pip install flake8
+script:
+  - flake8 Kazuki526 hamazaki1990 heavywatal
