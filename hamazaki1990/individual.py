@@ -2,7 +2,7 @@ import random
 
 
 class Individual:
-    mutationrate = 0.01
+    mutationrate = 0.001
 
     def __init__(self, n, f=1.0):
         self._id = n

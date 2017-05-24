@@ -2,60 +2,62 @@ import csv
 from population import Population
 
 
-def calculate_mutantfreq(population):
-    m_list = population.list_mutation()
-    m_count = [0 for x in range(len(m_list[0]))]
-    for i in m_list:
-        for j in m_list[i]:
-            if i[j] != 0:
-                m_count[j] += 1
-    mutantfreq = [x/len(m_list) for x in m_count]
-    return mutantfreq
-
-
 def change_allelewf(population, generation):
-    t = 0
-    fixprocess = [[t, population.calculate_mutantfreq()]]
+    change_allele = [population.calculate_mutantfreq_per_site()]
     for x in range(generation):
-        t += 1
         population.next_genwf()
-        fixprocess.append([t, population.calculate_mutantfreq()])
-    return fixprocess
+        change_allele.append(population.calculate_mutantfreq_per_site())
+    all_mutations = []
+    for x in change_allele:
+        all_mutations.extend(x.keys())
+    all_mutationsites = sorted(list(set(all_mutations)))
+    derived_allelefreq = []
+    for x in range(generation+1):
+        t = [x]
+        t.extend([change_allele[x].get(y, 0.0) for y in all_mutationsites])
+        derived_allelefreq.append(t)
+    return derived_allelefreq
 
 
-def change_allelemo(population):
-    t = 0
-    fixprocess = [[t, population.calculate_mutantfreq()]]
-    for x in range(20):
-        t += 1
+def change_allelemo(population, generation):
+    change_allele = [population.calculate_mutantfreq_per_site()]
+    for x in range(generation):
         population.next_genmo()
-        fixprocess.append([t, population.calculate_mutantfreq()])
-    return fixprocess
+        change_allele.append(population.calculate_mutantfreq_per_site())
+    all_mutations = []
+    for x in change_allele:
+        all_mutations.extend(x.keys())
+    all_mutationsites = sorted(list(set(all_mutations)))
+    derived_allelefreq = []
+    for x in range(generation+1):
+        t = [x]
+        t.extend([change_allele[x].get(y, 0.0) for y in all_mutationsites])
+        derived_allelefreq.append(t)
+    return derived_allelefreq
 
 
-def output_allelechange(filename, population, function):
+def output_allelechange(filename, function, population, generation):
     with open(filename, "w", encoding="utf-8") as outfile:
         writer = csv.writer(outfile)
-        writer.writerow(["generation", "derived_allele_frequency"])
-        fixprocess = function(population)
-        for x in range(len(fixprocess)):
-            writer.writerow(fixprocess[x])
+        m_freq = function(population, generation)
+        num = ["allele" + str(i) + "frequency" for i in range(len(m_freq[0]))]
+        col_name = ["generation"]
+        col_name.extend(num)
+        writer.writerow(col_name)
+        for x in range(len(m_freq)):
+            writer.writerow(m_freq[x])
 
 
 p1_1 = Population(10)
-print(p1_1.get_ids())
-print(p1_1.get_fitnesses())
-print(p1_1.is_not_fixed())
+fixprocess1 = change_allelewf(p1_1, 10)
+print(fixprocess1)
 
-for x in range(10):
-    p1_1.next_genwf()
-    print(p1_1.get_ids())
-    p1_1.get_genotypes()
-    p1_1.list_mutation()
-    print(p1_1.calculate_mutantfreq())
+p1_2 = Population(10)
+fixprocess2 = change_allelemo(p1_2, 20)
+print(fixprocess2)
 
-p1 = Population(10, 0.1, 0.2)
-output_allelechange("allelefreqwf.csv", p1, change_allelewf)
+p1 = Population(100)
+output_allelechange("allelefreqwf.csv", change_allelewf, p1, 100)
 
-p2 = Population(10, 0.1, 0.5)
-output_allelechange("allelefreqmo.csv", p2, change_allelemo)
+p2 = Population(100)
+output_allelechange("allelefreqmo.csv", change_allelemo, p2, 100)
