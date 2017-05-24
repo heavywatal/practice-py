@@ -1,5 +1,7 @@
 # practice-py
 
+[![Build Status](https://travis-ci.org/heavywatal/practice-py.svg?branch=master)](https://travis-ci.org/heavywatal/practice-py)
+
 Shared repository for python and pop-gen practice
 
 ## Installation and configuration
