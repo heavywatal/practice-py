@@ -39,13 +39,13 @@ def change_allelemo(population, generation):
 def output_allelechange(filename, function, population, generation):
     with open(filename, "w", encoding="utf-8") as outfile:
         writer = csv.writer(outfile)
-        m_freq = function(population, generation)
-        num = ["allele" + str(i) + "frequency" for i in range(len(m_freq[0]))]
+        freq = function(population, generation)
+        num = ["allele" + str(i) + "frequency" for i in range(len(freq[0])-1)]
         col_name = ["generation"]
         col_name.extend(num)
         writer.writerow(col_name)
-        for x in range(len(m_freq)):
-            writer.writerow(m_freq[x])
+        for x in range(len(freq)):
+            writer.writerow(freq[x])
 
 
 p1_1 = Population(10)
