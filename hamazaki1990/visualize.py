@@ -13,10 +13,10 @@ def calculate_mutantfreq(population):
     return mutantfreq
 
 
-def change_allelewf(population):
+def change_allelewf(population, generation):
     t = 0
     fixprocess = [[t, population.calculate_mutantfreq()]]
-    for x in range(20):
+    for x in range(generation):
         t += 1
         population.next_genwf()
         fixprocess.append([t, population.calculate_mutantfreq()])
@@ -41,6 +41,18 @@ def output_allelechange(filename, population, function):
         for x in range(len(fixprocess)):
             writer.writerow(fixprocess[x])
 
+
+p1_1 = Population(10)
+print(p1_1.get_ids())
+print(p1_1.get_fitnesses())
+print(p1_1.is_not_fixed())
+
+for x in range(10):
+    p1_1.next_genwf()
+    print(p1_1.get_ids())
+    p1_1.get_genotypes()
+    p1_1.list_mutation()
+    print(p1_1.calculate_mutantfreq())
 
 p1 = Population(10, 0.1, 0.2)
 output_allelechange("allelefreqwf.csv", p1, change_allelewf)
