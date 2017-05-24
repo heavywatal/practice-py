@@ -2,11 +2,12 @@ import random
 
 
 class Individual:
-    def __init__(self, n, f=1.0, mutationrate=0.0):
+    mutationrate = 0.01
+
+    def __init__(self, n, f=1.0):
         self._id = n
         self._fitness = f
         self._genotype = []
-        self._mutationrate = mutationrate
 
     def get_id(self):
         return self._id
@@ -20,7 +21,7 @@ class Individual:
     def acquire_mutation(self):
         r = random.random()
         next_genotype = self._genotype
-        if r < self._mutationrate:
+        if r < Individual.mutationrate:
             next_genotype.append(random.random())
         self._genotype = next_genotype
 
@@ -33,7 +34,7 @@ def main():
     print(ind.get_id())
     print(ind.get_fitness())
 
-    ind2 = Individual(30, 0.8, 1.0)
+    ind2 = Individual(30, 0.8)
     print(ind2.get_id())
     print(ind2.get_fitness())
     ind2.acquire_mutation()
@@ -43,8 +44,8 @@ def main():
     print(ind2.get_id())
     print(ind2.get_fitness())
 
-    ind3 = Individual(0, 1.0, 0.8)
-    ind4 = Individual(1, 1.0, 0.8)
+    ind3 = Individual(0, 1.0)
+    ind4 = Individual(1, 1.0)
     pop = [ind3, ind4]
     print([x.get_genotype() for x in pop])
     [x.acquire_mutation() for x in pop]

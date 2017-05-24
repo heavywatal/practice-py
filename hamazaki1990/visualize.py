@@ -2,23 +2,34 @@ import csv
 from population import Population
 
 
+def calculate_mutantfreq(population):
+    m_list = population.list_mutation()
+    m_count = [0 for x in range(len(m_list[0]))]
+    for i in m_list:
+        for j in m_list[i]:
+            if i[j] != 0:
+                m_count[j] += 1
+    mutantfreq = [x/len(m_list) for x in m_count]
+    return mutantfreq
+
+
 def change_allelewf(population):
     t = 0
-    fixprocess = [[t, population.get_mutantfreq()]]
-    while population.mutation_is_not_fixed():
+    fixprocess = [[t, population.calculate_mutantfreq()]]
+    for x in range(20):
         t += 1
         population.next_genwf()
-        fixprocess.append([t, population.get_mutantfreq()])
+        fixprocess.append([t, population.calculate_mutantfreq()])
     return fixprocess
 
 
 def change_allelemo(population):
     t = 0
-    fixprocess = [[t, population.get_mutantfreq()]]
-    while population.mutation_is_not_fixed():
+    fixprocess = [[t, population.calculate_mutantfreq()]]
+    for x in range(20):
         t += 1
         population.next_genmo()
-        fixprocess.append([t, population.get_mutantfreq()])
+        fixprocess.append([t, population.calculate_mutantfreq()])
     return fixprocess
 
 
