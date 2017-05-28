@@ -3,7 +3,7 @@ import copy
 
 
 class Individual:
-    mutationrate = 1
+    mutationrate = 0.1
 
     def __init__(self, n, f=1.0):
         self._id = n
@@ -49,12 +49,12 @@ def main():
     print(ind2.get_id())
     print(ind2.get_fitness())
 
-    ind3 = Individual(0, 1.0)
-    ind4 = Individual(1, 1.0)
+    ind3 = Individual(0)
+    ind4 = Individual(1)
     pop = [ind3, ind4]
     print([x.get_genotype() for x in pop])
-    [x.acquire_mutation() for x in pop]
-    print([x.get_genotype() for x in pop])
+    pop1 = [x.acquire_mutation() for x in pop]
+    print([x.get_genotype() for x in pop1])
     [x.acquire_mutation() for x in pop]
     print([x.get_genotype() for x in pop])
 

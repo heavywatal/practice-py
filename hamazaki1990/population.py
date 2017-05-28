@@ -36,15 +36,15 @@ class Population:
             parent_inds = roulettechoice(self._inds, cumsum_fitness)
             next_inds = parent_inds.acquire_mutation()
             next_generation.append(next_inds)
-        return next_generation
+        self._inds = next_generation
 
     def next_genmo(self):
         fitness = [x.get_fitness() for x in self._inds]
         size = len(self._inds)
         cumsum_fitness = [sum(fitness[:i]) for i in range(1, size + 1)]
         i_dying = random.randrange(size)
-        next_inds = roulettechoice(self._inds, cumsum_fitness)
-        next_inds.acquire_mutation()
+        parent_inds = roulettechoice(self._inds, cumsum_fitness)
+        next_inds = parent_inds.acquire_mutation()
         self._inds[i_dying] = next_inds
 
     def list_mutation(self):
