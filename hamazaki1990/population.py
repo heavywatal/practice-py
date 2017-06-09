@@ -10,10 +10,10 @@ def roulettechoice(individuals, cumsum_fitness):
 
 
 class Population:
-    def __init__(self, n, mutantrate=0, s=0):
-        num_mutant = int(n * mutantrate)
+    def __init__(self, n, mutant=0, s=0):
+        num_mutant = int(n * mutant)
         mutant_inds = [Individual(x, 1 + s) for x in range(num_mutant)]
-        wild_inds = [Individual(x) for x in range(num_mutant, n)]
+        wild_inds = [Individual(x, 1) for x in range(num_mutant, n)]
         self._inds = mutant_inds + wild_inds
 
     def get_ids(self):
@@ -23,10 +23,9 @@ class Population:
         fitness = [x.get_fitness() for x in self._inds]
         return fitness
 
-    def get_mutantfreq(self):
-        fitness = [x.get_fitness() for x in self._inds]
-        mutantfreq = 1 - fitness.count(1.0)/len(fitness)
-        return mutantfreq
+    def get_genotypes(self):
+        genotypes = [x.get_genotype() for x in self._inds]
+        return genotypes
 
     def next_genwf(self):
         fitness = [x.get_fitness() for x in self._inds]
@@ -34,7 +33,9 @@ class Population:
         cumsum_fitness = [sum(fitness[:i]) for i in range(1, size + 1)]
         next_generation = []
         for x in range(size):
-            next_generation.append(roulettechoice(self._inds, cumsum_fitness))
+            parent_inds = roulettechoice(self._inds, cumsum_fitness)
+            next_inds = parent_inds.acquire_mutation()
+            next_generation.append(next_inds)
         self._inds = next_generation
 
     def next_genmo(self):
@@ -42,19 +43,43 @@ class Population:
         size = len(self._inds)
         cumsum_fitness = [sum(fitness[:i]) for i in range(1, size + 1)]
         i_dying = random.randrange(size)
-        self._inds[i_dying] = roulettechoice(self._inds, cumsum_fitness)
+        parent_inds = roulettechoice(self._inds, cumsum_fitness)
+        next_inds = parent_inds.acquire_mutation()
+        self._inds[i_dying] = next_inds
+
+    def list_mutation(self):
+        genotypes = [x.get_genotype() for x in self._inds]
+        m_sites = []
+        for x in genotypes:
+            m_sites.extend(x)
+        m_sites = sorted(list(set(m_sites)))
+        m_list = ([[0 for x in range(len(m_sites))]
+                  for y in range(len(self._inds))])
+        for i in range(len(self._inds)):
+            for j in range(len(genotypes[i])):
+                k = m_sites.index(genotypes[i][j])
+                m_list[i][k] += 1
+        return m_list
+
+    def mutantfreq_per_site(self):
+        genotypes = [x.get_genotype() for x in self._inds]
+        m_sites = []
+        for x in genotypes:
+            m_sites.extend(x)
+        m_sites = sorted(list(set(m_sites)))
+        m_count = [0 for x in range(len(m_sites))]
+        for i in range(len(self._inds)):
+            for j in range(len(genotypes[i])):
+                k = m_sites.index(genotypes[i][j])
+                m_count[k] += 1
+        mutantfreq = [x/len(self._inds) for x in m_count]
+        mutantfreq_per_site = ([[m_sites[i], mutantfreq[i]]
+                               for i in range(len(m_sites))])
+        return mutantfreq_per_site
 
     def is_not_fixed(self):
         for x in range(1, len(self._inds)):
             if self._inds[0] != self._inds[x]:
-                return True
-        else:
-            return False
-
-    def mutation_is_not_fixed(self):
-        fitness = [x.get_fitness() for x in self._inds]
-        for x in range(1, len(fitness)):
-            if fitness[0] != fitness[x]:
                 return True
         else:
             return False
@@ -65,46 +90,41 @@ def main():
     print(p1_1.get_ids())
     print(p1_1.get_fitnesses())
     print(p1_1.is_not_fixed())
-    print(p1_1.mutation_is_not_fixed())
 
-    for x in range(20):
+    for x in range(10):
         p1_1.next_genwf()
         print(p1_1.get_ids())
-        print(p1_1.get_fitnesses())
+        print(p1_1.get_genotypes())
+        print(p1_1.list_mutation())
+        print(p1_1.mutantfreq_per_site())
+
     print(p1_1.is_not_fixed())
-    print(p1_1.mutation_is_not_fixed())
+    p1_1.list_mutation()
 
     p1_2 = Population(10, 0.3, 0.2)
     print(p1_2.get_ids())
     print(p1_2.get_fitnesses())
     print(p1_2.is_not_fixed())
-    print(p1_2.mutation_is_not_fixed())
-    print(p1_2.get_mutantfreq())
-
-    for x in range(20):
-        p1_2.next_genwf()
-        print(p1_2.get_ids())
-    print(p1_2.get_fitnesses())
-    print(p1_2.is_not_fixed())
-    print(p1_2.mutation_is_not_fixed())
 
     p2_1 = Population(10)
     print(p2_1.get_ids())
     print(p2_1.get_fitnesses())
 
-    for x in range(20):
+    for x in range(10):
         p2_1.next_genmo()
         print(p2_1.get_ids())
     print(p2_1.get_fitnesses())
+    p2_1.list_mutation()
 
     p2_2 = Population(10, 0.3, 0.2)
     print(p2_2.get_ids())
     print(p2_2.get_fitnesses())
 
-    for x in range(20):
+    for x in range(10):
         p2_2.next_genmo()
         print(p2_2.get_ids())
     print(p2_2.get_fitnesses())
+    p2_2.list_mutation()
 
 
 if __name__ == '__main__':
