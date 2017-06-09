@@ -3,7 +3,7 @@ import copy
 
 
 class Individual:
-    mutationrate = 0.1
+    mutationrate = 0.01
 
     def __init__(self, n, f=1.0):
         self._id = n

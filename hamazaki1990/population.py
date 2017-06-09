@@ -61,7 +61,7 @@ class Population:
                 m_list[i][k] += 1
         return m_list
 
-    def calculate_mutantfreq_per_site(self):
+    def mutantfreq_per_site(self):
         genotypes = [x.get_genotype() for x in self._inds]
         m_sites = []
         for x in genotypes:
@@ -73,8 +73,8 @@ class Population:
                 k = m_sites.index(genotypes[i][j])
                 m_count[k] += 1
         mutantfreq = [x/len(self._inds) for x in m_count]
-        mutantfreq_per_site = ({m_sites[i]: mutantfreq[i]
-                               for i in range(len(m_sites))})
+        mutantfreq_per_site = ([[m_sites[i], mutantfreq[i]]
+                               for i in range(len(m_sites))])
         return mutantfreq_per_site
 
     def is_not_fixed(self):
@@ -96,7 +96,7 @@ def main():
         print(p1_1.get_ids())
         print(p1_1.get_genotypes())
         print(p1_1.list_mutation())
-        print(p1_1.calculate_mutantfreq_per_site())
+        print(p1_1.mutantfreq_per_site())
 
     print(p1_1.is_not_fixed())
     p1_1.list_mutation()

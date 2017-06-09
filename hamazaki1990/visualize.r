@@ -1,13 +1,16 @@
 library("tidyverse")
 setwd("~/github/practice-py/hamazaki1990/")
 freq_wf <- read_csv("allelefreqwf.csv") %>%
-    dplyr::mutate(model = "wf")
+  dplyr::arrange(locus, step)
 freq_wf
+plotwf <- ggplot(freq_wf, aes(x=step, y=frequency, group=locus))
+plotwf <-plotwf +geom_line()
+plotwf <- plotwf + ylim(0, 1)
+print(plotwf)
 freq_mo <- read_csv("allelefreqmo.csv") %>%
-    dplyr::mutate(model = "moran")
+  dplyr::arrange(locus, step)
 freq_mo
-freq <- dplyr::bind_rows(freq_wf, freq_mo)
-print(freq)
-freqplot <- ggplot(freq, aes(x=generation, y=derived_allele_frequency, group=model, color=model))
-freqplot <-freqplot + geom_line()
-print(freqplot)
+plotmo <- ggplot(freq_mo, aes(x=step, y=frequency, group=locus))
+plotmo <-plotmo +geom_line()
+plotmo <- plotmo + ylim(0, 1)
+print(plotmo)
